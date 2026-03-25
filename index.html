@@ -1,0 +1,1453 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Shop - Vũ Quốc Khánh</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0614;
+    --bg-2:#120a24;
+    --panel:rgba(255,255,255,0.06);
+    --panel-2:rgba(255,255,255,0.03);
+    --card:rgba(255,255,255,0.05);
+    --border:rgba(255,255,255,0.10);
+    --text:#f5f3ff;
+    --muted:#c4b5fd;
+    --muted-2:#a78bfa;
+    --accent:#a855f7;
+    --accent-2:#7c3aed;
+    --accent-3:#ec4899;
+    --success:#4ade80;
+    --shadow:0 20px 50px rgba(0,0,0,0.35);
+    --radius:22px;
+    --radius-sm:16px;
+    --max-width:1180px;
+  }
+
+  *{
+    box-sizing:border-box;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+
+  html{scroll-behavior:smooth}
+
+  body{
+    margin:0;
+    color:var(--text);
+    background:
+      radial-gradient(circle at top left, rgba(168,85,247,0.22), transparent 28%),
+      radial-gradient(circle at top right, rgba(236,72,153,0.18), transparent 24%),
+      radial-gradient(circle at bottom, rgba(124,58,237,0.20), transparent 26%),
+      linear-gradient(180deg, #090512 0%, #10071d 35%, #130923 100%);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size:32px 32px;
+    mask-image:linear-gradient(to bottom, rgba(0,0,0,0.35), transparent);
+  }
+
+  a{color:#e9d5ff}
+
+  .wrap{
+    max-width:var(--max-width);
+    margin:24px auto;
+    padding:20px;
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:22px;
+  }
+
+  .left{
+    background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:1px solid var(--border);
+    border-radius:28px;
+    padding:22px;
+    height:calc(100vh - 88px);
+    position:sticky;
+    top:20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:560px;
+    box-shadow:var(--shadow);
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+
+  .logo{
+    width:50px;
+    height:50px;
+    background:none;
+    border:none;
+    box-shadow:none;
+    border-radius:0;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:visible;
+    flex-shrink:0;
+  }
+
+  .logo img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+    background:none;
+  }
+
+  .brand h1{
+    font-size:18px;
+    margin:0;
+    font-weight:800;
+    letter-spacing:0.2px;
+  }
+
+  .brand .sub{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  .nav{
+    margin-top:22px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .nav button{
+    width:100%;
+    text-align:left;
+    background:transparent;
+    border:1px solid transparent;
+    color:#f3e8ff;
+    padding:14px 14px;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+    font-weight:700;
+    transition:all .22s ease;
+  }
+
+  .nav button:hover{
+    transform:translateX(4px);
+    background:linear-gradient(90deg, rgba(168,85,247,0.14), rgba(236,72,153,0.08));
+    border-color:rgba(255,255,255,0.08);
+  }
+
+  .nav button.active{
+    background:linear-gradient(90deg, rgba(168,85,247,0.22), rgba(236,72,153,0.14));
+    border-color:rgba(255,255,255,0.12);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 22px rgba(124,58,237,0.18);
+  }
+
+  .meta{
+    color:#ddd6fe;
+    font-size:13px;
+    margin-top:16px;
+    line-height:1.7;
+  }
+
+  .bottom-left{
+    display:flex;
+    gap:12px;
+    align-items:end;
+    justify-content:space-between;
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+
+  .cta,.btn{
+    background:linear-gradient(135deg, var(--accent-3), var(--accent), var(--accent-2));
+    color:white;
+    padding:11px 16px;
+    border-radius:14px;
+    font-weight:800;
+    border:0;
+    cursor:pointer;
+    box-shadow:0 14px 30px rgba(168,85,247,0.30);
+    transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+  }
+
+  .cta:hover,.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 18px 36px rgba(168,85,247,0.36);
+  }
+
+  .ghost{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.10);
+    color:#f5eaff;
+    padding:10px 13px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:all .18s ease;
+  }
+
+  .ghost:hover{
+    background:rgba(255,255,255,0.08);
+    transform:translateY(-1px);
+  }
+
+  .three-dot{
+    display:none;
+    position:fixed;
+    left:14px;
+    top:16px;
+    z-index:120;
+  }
+
+  .three-dot button{
+    background:linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+    border:1px solid rgba(255,255,255,0.12);
+    color:#fff;
+    padding:12px 14px;
+    border-radius:16px;
+    box-shadow:0 14px 34px rgba(0,0,0,0.35);
+    font-weight:800;
+    font-size:20px;
+    cursor:pointer;
+  }
+
+  .three-dot .dotline{
+    display:block;
+    line-height:1;
+    letter-spacing:6px;
+  }
+
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,0.10);
+    border-radius:26px;
+    padding:24px;
+    box-shadow:var(--shadow);
+  }
+
+  header.page-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+  }
+
+  header.page-head h2{
+    margin:0;
+    font-size:22px;
+    font-weight:800;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:18px;
+  }
+
+  .tile{
+    background:linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
+    border:1px solid rgba(255,255,255,0.10);
+    padding:18px;
+    border-radius:20px;
+    box-shadow:0 8px 22px rgba(0,0,0,0.18);
+    transition:transform .18s ease, border-color .18s ease;
+  }
+
+  .tile:hover{
+    transform:translateY(-4px);
+    border-color:rgba(216,180,254,0.32);
+  }
+
+  .small{
+    font-size:13px;
+    color:#ddd6fe;
+  }
+
+  .tiny{
+    font-size:12px;
+    color:#c4b5fd;
+  }
+
+  .form-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:12px;
+  }
+
+  input[type=text],
+  input[type=password],
+  input[type=number],
+  select,
+  textarea{
+    width:100%;
+    padding:13px 14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(255,255,255,0.05);
+    color:#fff;
+    outline:none;
+    transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+
+  input::placeholder,
+  textarea::placeholder{
+    color:#c4b5fd;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus{
+    border-color:rgba(216,180,254,0.55);
+    box-shadow:0 0 0 4px rgba(168,85,247,0.15);
+    background:rgba(255,255,255,0.07);
+  }
+
+  label{
+    font-size:13px;
+    color:#ddd6fe;
+    display:block;
+    margin-bottom:7px;
+    font-weight:600;
+  }
+
+  .table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+    overflow:hidden;
+  }
+
+  .table th,
+  .table td{
+    padding:12px 10px;
+    text-align:left;
+    border-bottom:1px solid rgba(255,255,255,0.07);
+    font-size:14px;
+    vertical-align:top;
+  }
+
+  .table th{
+    color:#f5d0fe;
+    font-size:13px;
+    font-weight:700;
+    background:rgba(255,255,255,0.03);
+  }
+
+  .kbd{
+    background:rgba(255,255,255,0.08);
+    padding:6px 9px;
+    border-radius:10px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:#f5d0fe;
+    border:1px solid rgba(255,255,255,0.08);
+    display:inline-block;
+  }
+
+  .notice{
+    background:linear-gradient(135deg, rgba(168,85,247,0.22), rgba(236,72,153,0.18));
+    padding:12px 14px;
+    border-radius:16px;
+    color:#fdf4ff;
+    font-weight:700;
+    border:1px solid rgba(255,255,255,0.10);
+  }
+
+  .price{
+    font-size:22px;
+    font-weight:900;
+    color:#f5d0fe;
+    text-shadow:0 0 18px rgba(236,72,153,0.20);
+  }
+
+  .muted{color:var(--muted)}
+  .success{color:var(--success); font-weight:700}
+
+  .pill{
+    background:linear-gradient(135deg, rgba(168,85,247,0.18), rgba(236,72,153,0.12));
+    padding:8px 10px;
+    border-radius:999px;
+    font-size:13px;
+    color:#f5d0fe;
+    border:1px solid rgba(255,255,255,0.10);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .video-box{
+    background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border-radius:22px;
+    padding:18px;
+    min-height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#ddd6fe;
+    border:1px solid rgba(255,255,255,0.10);
+  }
+
+  .brand-home{
+    display:flex;
+    gap:16px;
+    align-items:center;
+  }
+
+  .brand-home .logo-lg{
+    width:160px;
+    height:80px;
+    background:none;
+    border:none;
+    box-shadow:none;
+    border-radius:0;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:visible;
+    flex-shrink:0;
+  }
+
+  .brand-home .logo-lg img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+    background:none;
+  }
+
+  .brand-home h1{
+    margin:0;
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:-0.02em;
+  }
+
+  .brand-home .tag{
+    color:#ddd6fe;
+    margin-top:8px;
+    max-width:520px;
+    line-height:1.7;
+  }
+
+  .hero-banner{
+    margin-top:18px;
+    padding:22px;
+    border-radius:24px;
+    background:
+      radial-gradient(circle at right top, rgba(236,72,153,0.22), transparent 26%),
+      linear-gradient(135deg, rgba(124,58,237,0.30), rgba(168,85,247,0.18), rgba(255,255,255,0.05));
+    border:1px solid rgba(255,255,255,0.10);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+
+  .hero-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:14px;
+  }
+
+  .hero-stats{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  .stat-box{
+    min-width:140px;
+    padding:14px 16px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.10);
+  }
+
+  .stat-box strong{
+    display:block;
+    font-size:20px;
+    margin-top:5px;
+  }
+
+  .flex{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .right-actions{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+
+  .topup-layout{
+    display:grid;
+    grid-template-columns:1fr 340px;
+    gap:22px;
+    align-items:start;
+    margin-top:18px;
+  }
+
+  .topup-form-card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border-radius:22px;
+    padding:20px;
+    border:1px solid rgba(255,255,255,0.10);
+  }
+
+  .topup-image-box{
+    max-width:340px;
+    width:100%;
+    margin:0 auto;
+    background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    border-radius:30px;
+    padding:14px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.25);
+    border:1px solid rgba(255,255,255,0.10);
+  }
+
+  .topup-image-box img{
+    width:100%;
+    display:block;
+    border-radius:22px;
+  }
+
+  .topup-note{
+    margin-top:12px;
+    font-size:13px;
+    color:#ddd6fe;
+    line-height:1.7;
+  }
+
+  .mobile-nav{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:290px;
+    background:linear-gradient(180deg, #12081f, #0a0513);
+    transform:translateX(-110%);
+    transition:transform .25s cubic-bezier(.2,.9,.2,1);
+    z-index:140;
+    padding:22px;
+    box-shadow:12px 0 36px rgba(0,0,0,0.45);
+    border-right:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(18px);
+  }
+
+  .mobile-nav.open{transform:translateX(0)}
+
+  .mobile-nav .close{margin-bottom:12px}
+
+  .list-clean{
+    margin:10px 0 0;
+    padding-left:18px;
+    color:#ddd6fe;
+    line-height:1.7;
+  }
+
+  @media (max-width:900px){
+    .wrap{
+      grid-template-columns:1fr;
+      padding:12px;
+      margin-top:64px;
+    }
+
+    .left{display:none}
+    .three-dot{display:block}
+    .card{padding:18px}
+    .grid{grid-template-columns:1fr}
+    .topup-layout{grid-template-columns:1fr}
+    .topup-image-box{max-width:300px}
+    .brand-home{
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    .brand-home h1{font-size:26px}
+    .hero-banner{
+      padding:18px;
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    .hero-stats{
+      width:100%;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+    }
+    .stat-box{min-width:unset}
+    .brand-home .logo-lg{
+      width:130px;
+      height:65px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="three-dot" title="Mở menu">
+  <button id="openNav" aria-label="Mở thanh điều hướng">
+    <span class="dotline">⋯</span>
+  </button>
+</div>
+
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <div class="close"><button onclick="toggleMobileNav()" class="ghost">Đóng ✕</button></div>
+  <div class="brand" style="margin-bottom:10px;">
+    <div class="logo">
+      <img src="aaa.jpg" alt="Logo Khánh">
+    </div>
+    <div>
+      <h3 style="margin:0;font-size:16px">SHOP KEY VU QUOC KHANH</h3>
+      <div class="tiny">Giao diện mới tông tím hiện đại</div>
+    </div>
+  </div>
+  <div style="margin-top:14px;">
+    <div class="nav" id="mobileNavList"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <aside class="left" id="leftCol">
+    <div>
+      <div class="brand">
+        <div class="logo" id="leftLogo">
+          <img src="aaa.jpg" alt="Logo Khánh">
+        </div>
+        <div>
+          <h1>Vũ Quốc Khánh</h1>
+          <div class="sub">Shop Key Premium</div>
+        </div>
+      </div>
+
+      <div class="nav" id="navList" style="margin-top:18px;"></div>
+
+      <div class="meta">
+        <div>Liên hệ: <a href="https://t.me/+EGNDhYoGHFwxMWVl" target="_blank" style="color:#f5d0fe; text-decoration:none; font-weight:700;">Telegram</a></div>
+        <div style="margin-top:8px;">Hỗ trợ tự động nếu có lỗi phát sinh.</div>
+      </div>
+    </div>
+
+    <div class="bottom-left">
+      <div>
+        <div class="tiny">Tài khoản</div>
+        <div id="userSummary" style="margin-top:8px;">
+          <div class="pill">Chưa đăng nhập</div>
+        </div>
+      </div>
+      <div>
+        <button class="cta" id="btnLoginShort">Đăng nhập</button>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <section class="card" id="pageContent"></section>
+  </main>
+</div>
+
+<script>
+const TELEGRAM_LINK = "https://t.me/+EGNDhYoGHFwxMWVl";
+
+const DB = {
+  usersKey: 'shop_users_v3',
+  sessionKey: 'shop_session_v3',
+  keysKey: 'shop_keys_v3',
+  ordersKey: 'shop_orders_v3',
+  init(){
+    if(!localStorage.getItem(this.usersKey)){
+      const admin = {id: genId(), username:'vukhanh', pwdHash:'khanh3082006', display:'Vũ Quốc Khánh', isAdmin:true, createdAt: Date.now(), balance:0};
+      const admin2 = {id: genId(), username:'admin', pwdHash:'admin123', display:'Admin', isAdmin:true, createdAt: Date.now(), balance:0};
+      localStorage.setItem(this.usersKey, JSON.stringify([admin, admin2]));
+    }
+    if(!localStorage.getItem(this.keysKey)){
+      const keys = [
+        {id:genId(), name:'Key GPT Pro - 30 ngày', price:199000, stock:2, note:'Full access', codes: ['PRO-ABC-123', 'PRO-XYZ-456'], createdAt: Date.now()},
+        {id:genId(), name:'Key GPT Lite - 7 ngày', price:59000, stock:3, note:'Dùng thử', codes: ['LITE-1-234','LITE-2-345','LITE-3-456'], createdAt: Date.now()}
+      ];
+      localStorage.setItem(this.keysKey, JSON.stringify(keys));
+    }
+    if(!localStorage.getItem(this.ordersKey)) localStorage.setItem(this.ordersKey, JSON.stringify([]));
+  },
+  users(){ return JSON.parse(localStorage.getItem(this.usersKey)||'[]'); },
+  saveUsers(u){ localStorage.setItem(this.usersKey, JSON.stringify(u)); },
+  session(){ return JSON.parse(localStorage.getItem(this.sessionKey)||'null'); },
+  saveSession(s){ localStorage.setItem(this.sessionKey, JSON.stringify(s)); },
+  keys(){ return JSON.parse(localStorage.getItem(this.keysKey)||'[]'); },
+  saveKeys(k){ localStorage.setItem(this.keysKey, JSON.stringify(k)); },
+  orders(){ return JSON.parse(localStorage.getItem(this.ordersKey)||'[]'); },
+  saveOrders(o){ localStorage.setItem(this.ordersKey, JSON.stringify(o)); }
+};
+
+function genId(){ return 'id_' + Math.random().toString(36).slice(2,9); }
+
+DB.init();
+
+const PAGES = ['Trang chủ','Mua hàng','Nạp tiền','Đơn hàng','Video cài đặt','Liên hệ','Đăng nhập','Đăng ký','Admin'];
+
+function createNavButtons(){
+  const nav = document.getElementById('navList');
+  nav.innerHTML='';
+  PAGES.forEach(p=>{
+    const btn = document.createElement('button');
+    btn.textContent = p;
+    btn.onclick = ()=>navigateTo(p);
+    btn.id = 'nav-'+p.replace(/\s+/g,'_');
+    nav.appendChild(btn);
+  });
+
+  const mnav = document.getElementById('mobileNavList');
+  if(mnav){
+    mnav.innerHTML='';
+    PAGES.forEach(p=>{
+      const b = document.createElement('button');
+      b.textContent = p;
+      b.className='ghost';
+      b.style.display='block';
+      b.style.marginBottom='8px';
+      b.onclick = ()=>{ toggleMobileNav(); navigateTo(p); };
+      mnav.appendChild(b);
+    });
+  }
+}
+createNavButtons();
+
+document.getElementById('btnLoginShort').onclick = ()=>navigateTo('Đăng nhập');
+document.getElementById('openNav').onclick = ()=>toggleMobileNav();
+
+function toggleMobileNav(){
+  const el=document.getElementById('mobileNav');
+  el.classList.toggle('open');
+  el.setAttribute('aria-hidden',!el.classList.contains('open'));
+}
+
+function updateUserSummary(){
+  const sess = DB.session();
+  const el = document.getElementById('userSummary');
+  if(!sess){
+    el.innerHTML = '<div class="pill">Chưa đăng nhập</div>';
+    document.getElementById('btnLoginShort').textContent='Đăng nhập';
+    document.getElementById('btnLoginShort').onclick = ()=>navigateTo('Đăng nhập');
+    return;
+  }
+  const u = DB.users().find(x=>x.id===sess.userId);
+  if(!u) {
+    DB.saveSession(null);
+    updateUserSummary();
+    return;
+  }
+  el.innerHTML = '<div><strong>'+u.display+'</strong><div class="tiny" style="margin-top:6px;">Số dư: <span class="kbd">'+(u.balance||0)+'₫</span></div></div>';
+  document.getElementById('btnLoginShort').textContent='Đăng xuất';
+  document.getElementById('btnLoginShort').onclick = ()=>{
+    DB.saveSession(null);
+    updateUserSummary();
+    navigateTo('Trang chủ');
+  };
+}
+
+function setActiveNav(page){
+  PAGES.forEach(p=>{
+    const btn = document.getElementById('nav-'+p.replace(/\s+/g,'_'));
+    if(btn) btn.classList.toggle('active', p===page);
+  });
+}
+
+function navigateTo(page){
+  setActiveNav(page);
+  const content = document.getElementById('pageContent');
+  if(page==='Trang chủ') return renderHome(content);
+  if(page==='Mua hàng') return renderShop(content);
+  if(page==='Nạp tiền') return renderTopUp(content);
+  if(page==='Đơn hàng') return renderOrders(content);
+  if(page==='Video cài đặt') return renderVideos(content);
+  if(page==='Liên hệ') return renderContact(content);
+  if(page==='Đăng nhập') return renderLogin(content);
+  if(page==='Đăng ký') return renderRegister(content);
+  if(page==='Admin') return renderAdmin(content);
+  return renderHome(content);
+}
+
+function renderHome(container){
+  container.innerHTML = `
+    <header class="page-head">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="brand-home">
+          <div class="logo-lg">
+            <img src="aaa.jpg" alt="Logo Khánh">
+          </div>
+          <div>
+            <h1>Vũ Quốc Khánh</h1>
+            <div class="tag">Xin chào bạn đến với web key của chúng tôi.</div>
+          </div>
+        </div>
+      </div>
+      <div class="right-actions">
+        <div class="notice">Tối ưu • Mượt • Mobile-PC</div>
+      </div>
+    </header>
+
+    <div class="hero-banner">
+      <div>
+        <div class="pill">Phiên bản giao diện mới</div>
+        <h2 style="margin:14px 0 10px; font-size:30px; line-height:1.2;">Shop key nổi bật hơn với tông tím premium</h2>
+        <div class="small" style="max-width:640px; line-height:1.8;"></div>
+        <div class="hero-actions">
+          <button class="btn" onclick="navigateTo('Mua hàng')">Xem sản phẩm</button>
+          <a href="${TELEGRAM_LINK}" target="_blank" class="ghost" style="text-decoration:none;">Liên hệ Telegram</a>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-box">
+          <div class="tiny">Hỗ trợ nhanh</div>
+          <strong>admin bot tự động khi key lỗi</strong>
+        </div>
+        <div class="stat-box">
+          <div class="tiny">An toàn</div>
+          <strong>cân acc chính khi mua</strong>
+        </div>
+        <div class="stat-box">
+          <div class="tiny">Ưu tiên khách mới</div>
+          <strong>giảm giá 20%</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:18px;">
+      <div class="tile">
+        <div class="small">Giới thiệu</div>
+        <h3 style="margin-top:10px; margin-bottom:8px;">Fluorite FF - iOS</h3>
+        <div class="tiny">Thiết kế sản phẩm nổi bật riêng cho thiết bị iOS</div>
+      </div>
+
+      <div class="tile">
+        <div class="small">Điểm nổi bật</div>
+        <ul class="list-clean">
+          <li>Fluorite FF - iOS</li>
+          <li>Pato team ApkMod Orange</li>
+          <li>DRIP CLIENT - APK MOD</li>
+        </ul>
+      </div>
+
+      <div class="tile">
+        <div class="small">Liên hệ nhanh</div>
+        <div style="margin-top:12px;">
+          <a href="${TELEGRAM_LINK}" target="_blank" class="btn" style="text-decoration:none; display:inline-flex;">Mua ngay qua Telegram</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;" class="card">
+      <h4 style="margin:0 0 8px 0; font-size:18px;">Các gói nổi bật</h4>
+      <div class="tiny">Sản phẩm đang có sẵn trong hệ thống</div>
+      <div id="featured" style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;"></div>
+    </div>
+  `;
+  renderFeatured();
+}
+
+function renderFeatured(){
+  const cont = document.getElementById('featured');
+  cont.innerHTML='';
+  const keys = DB.keys();
+  keys.forEach(k=>{
+    const el = document.createElement('div');
+    el.style.minWidth='240px';
+    el.innerHTML = `
+      <div class="tile">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+          <div><strong>${k.name}</strong><div class="tiny" style="margin-top:6px">${k.note}</div></div>
+          <div class="price">${formatMoney(k.price)}</div>
+        </div>
+        <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn" onclick="startPurchase('${k.id}')">Mua</button>
+          <button class="ghost" onclick="viewKey('${k.id}')">Xem</button>
+        </div>
+      </div>
+    `;
+    cont.appendChild(el);
+  });
+}
+
+function renderShop(container){
+  container.innerHTML = `
+    <header class="page-head">
+      <h2>Thư viện sản phẩm</h2>
+      <div class="tiny">Chọn gói phù hợp với nhu cầu của bạn</div>
+    </header>
+    <div style="margin-top:14px;">
+      <div id="shopList" class="grid"></div>
+    </div>
+  `;
+  const list = document.getElementById('shopList');
+  list.innerHTML='';
+  DB.keys().forEach(k=>{
+    const tile = document.createElement('div');
+    tile.className='tile';
+    tile.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+        <div><strong>${k.name}</strong><div class="tiny" style="margin-top:6px;">${k.note}</div></div>
+        <div class="price">${formatMoney(k.price)}</div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn" onclick="startPurchase('${k.id}')">Mua</button>
+        <button class="ghost" onclick="viewKey('${k.id}')">Chi tiết</button>
+      </div>
+    `;
+    list.appendChild(tile);
+  });
+}
+
+function viewKey(id){
+  const k = DB.keys().find(x=>x.id===id);
+  if(!k) return alert('Không tìm thấy sản phẩm');
+  SwalModal(`
+    <h3 style="margin-top:0">${k.name}</h3>
+    <p class="tiny">${k.note}</p>
+    <p class="small">Giá: <strong>${formatMoney(k.price)}</strong></p>
+    <p class="small">Còn: <strong>${k.stock}</strong></p>
+    <p class="small">Số mã còn: <strong>${(k.codes? k.codes.length : 0)}</strong></p>
+    <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn" onclick="startPurchase('${k.id}'); Swal.close()">Mua ngay</button>
+      <button class="ghost" onclick="Swal.close()">Đóng</button>
+    </div>
+  `);
+}
+
+function startPurchase(keyId){
+  const sess = DB.session();
+  if(!sess) return navigateTo('Đăng nhập');
+  const k = DB.keys().find(x=>x.id===keyId);
+  if(!k) return alert('Sản phẩm không tồn tại');
+
+  SwalModal(`
+    <h3 style="margin-top:0">Mua: ${k.name}</h3>
+    <p class="tiny">Giá: <strong>${formatMoney(k.price)}</strong></p>
+    <label>Số lượng</label>
+    <input id="buyQty" type="number" min="1" value="1" />
+    <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn" onclick="confirmPurchase('${k.id}')">Xác nhận mua</button>
+      <button class="ghost" onclick="Swal.close()">Hủy</button>
+    </div>
+    <div style="margin-top:12px;" class="tiny">Hệ thống sẽ trừ tiền trực tiếp từ số dư tài khoản.</div>
+  `);
+}
+
+function confirmPurchase(keyId){
+  const qty = parseInt(document.getElementById('buyQty').value||1);
+  const keys = DB.keys();
+  const k = keys.find(x=>x.id===keyId);
+  const sess = DB.session();
+  if(!sess){ Swal.close(); navigateTo('Đăng nhập'); return; }
+  if(qty<1) return alert('Số lượng không hợp lệ');
+  if(k.stock < qty) return alert('Số lượng trong kho không đủ');
+
+  const users = DB.users();
+  const user = users.find(u=>u.id===sess.userId);
+
+  const total = k.price * qty;
+  if((user.balance||0) < total) return alert('Số dư không đủ. Vui lòng nạp tiền.');
+
+  const assigned = [];
+  for(let i=0;i<qty;i++){
+    if(k.codes && k.codes.length>0){
+      const code = k.codes.shift();
+      assigned.push(code);
+    } else {
+      assigned.push(null);
+    }
+  }
+
+  const order = {
+    id: genId(),
+    userId: user.id,
+    keyId: k.id,
+    keyName: k.name,
+    qty: qty,
+    total: total,
+    createdAt: Date.now(),
+    status: assigned.every(a=>a) ? 'Hoàn thành' : 'Chờ xử lý',
+    codes: assigned
+  };
+  const orders = DB.orders();
+  orders.push(order);
+  DB.saveOrders(orders);
+
+  k.stock -= qty;
+  DB.saveKeys(keys);
+
+  user.balance = (user.balance || 0) - total;
+  DB.saveUsers(users);
+
+  DB.saveSession({userId: user.id, loggedAt: Date.now()});
+  updateUserSummary();
+
+  Swal.close();
+
+  const codesText = order.codes.map((c,i)=> c ? `<div><strong>Mã ${i+1}:</strong> <span class="kbd">${c}</span></div>` : `<div><strong>Mã ${i+1}:</strong> <em>Chưa có mã - admin cần thêm</em></div>`).join('');
+  SwalModal(`
+    <h3 style="margin-top:0">Đơn hàng đã tạo</h3>
+    <p class="tiny">Mã đơn: <span class="kbd">${order.id}</span></p>
+    <div style="margin-top:10px">${codesText}</div>
+    <div style="margin-top:14px;">
+      <button class="btn" onclick="Swal.close()">Đóng</button>
+    </div>
+  `);
+}
+
+function renderTopUp(container){
+  container.innerHTML = `
+    <header class="page-head">
+      <h2>Nạp tiền</h2>
+      <div class="tiny">Quét mã để chuyển khoản hoặc tạo đơn để admin duyệt</div>
+    </header>
+
+    <div class="topup-layout">
+      <div class="topup-form-card">
+        <div class="small">Số tiền nạp (VNĐ)</div>
+        <div class="form-row">
+          <input id="topupAmount" type="number" placeholder="Nhập số tiền, ví dụ: 100000" />
+          <button class="btn" onclick="doTopUp()">Tạo đơn nạp</button>
+        </div>
+
+        <div class="topup-note">
+          Sau khi bạn chuyển khoản hoặc gửi yêu cầu nạp, admin sẽ kiểm tra và duyệt đơn để cộng tiền vào tài khoản.
+        </div>
+      </div>
+
+      <div class="topup-image-box">
+        <img src="kl.jpg" alt="QR TPBank">
+      </div>
+    </div>
+  `;
+}
+
+function doTopUp(){
+  const val = parseInt(document.getElementById('topupAmount').value || 0);
+  const sess = DB.session();
+  if(!sess) return navigateTo('Đăng nhập');
+  if(val <= 0) return alert('Nhập số tiền hợp lệ');
+
+  const ord = {
+    id: genId(),
+    userId: sess.userId,
+    type:'topup',
+    amount: val,
+    createdAt: Date.now(),
+    status:'Chờ duyệt'
+  };
+
+  const orders = DB.orders();
+  orders.push(ord);
+  DB.saveOrders(orders);
+
+  alert('Đơn nạp đã tạo. Admin sẽ duyệt và cộng tiền cho bạn.');
+  navigateTo('Đơn hàng');
+}
+
+function renderOrders(container){
+  const sess = DB.session();
+  if(!sess) return renderLogin(container, 'Bạn cần đăng nhập để xem đơn hàng.');
+  const orders = DB.orders().filter(o=>o.userId===sess.userId);
+  container.innerHTML = `
+    <header class="page-head"><h2>Đơn hàng của bạn</h2><div class="tiny">Lịch sử mua hàng và nạp tiền</div></header>
+    <div style="margin-top:12px; overflow:auto;">
+      <table class="table">
+        <thead><tr><th>Mã</th><th>Loại</th><th>Số tiền</th><th>Trạng thái</th><th>Thông tin</th><th>Ngày</th></tr></thead>
+        <tbody>
+          ${orders.map(o=>`<tr>
+            <td class="kbd">${o.id}</td>
+            <td>${o.type==='topup' ? 'Nạp tiền' : (o.keyName || 'Mua') }</td>
+            <td>${o.total? formatMoney(o.total) : (o.amount? formatMoney(o.amount):'-')}</td>
+            <td>${o.status || '-'}</td>
+            <td>${o.type==='topup' ? (o.status==='Đã duyệt' ? 'Đã cộng ' + formatMoney(o.amount) : 'Chờ duyệt') : (o.codes ? o.codes.map((c,i)=> c? `<div><strong>Mã ${i+1}:</strong> <span class="kbd">${c}</span></div>` : `<div><strong>Mã ${i+1}:</strong> <em>Chưa có mã</em></div>`).join('') : '-')}</td>
+            <td class="tiny">${new Date(o.createdAt).toLocaleString()}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderVideos(container){
+  container.innerHTML = `
+    <header class="page-head"><h2>Video & hướng dẫn cài đặt</h2></header>
+    <div style="margin-top:12px;">
+      <div class="video-box">
+        <div style="text-align:center;">
+          <div style="font-weight:800; font-size:18px;">Video cài đặt demo</div>
+          <div class="tiny" style="margin-top:10px">Bạn có thể chèn iframe video YouTube hoặc video tự host vào đây.</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderContact(container){
+  container.innerHTML = `
+    <header class="page-head"><h2>Liên hệ</h2><div class="tiny">Kết nối nhanh qua Telegram</div></header>
+    <div style="margin-top:12px;" class="card">
+      <p class="small">Telegram: <a href="${TELEGRAM_LINK}" style="color:#f5d0fe; font-weight:700;">${TELEGRAM_LINK}</a></p>
+      <p class="small">Zalo: 0907584776</p>
+      <p class="tiny">Hoặc gửi tin nhắn trực tiếp tại form bên dưới:</p>
+      <div style="margin-top:8px;">
+        <label>Họ tên</label><input id="contactName" type="text" />
+        <label style="margin-top:8px">Nội dung</label><textarea id="contactMsg" rows="4"></textarea>
+        <div style="margin-top:10px;"><button class="btn" onclick="sendContact()">Gửi</button></div>
+      </div>
+    </div>
+  `;
+}
+
+function sendContact(){
+  const n = document.getElementById('contactName').value||'Khách';
+  const m = document.getElementById('contactMsg').value||'';
+  if(!m) return alert('Nhập nội dung');
+  alert('Cảm ơn '+n+'! Chúng tôi sẽ liên hệ sớm. (Demo)');
+}
+
+function renderLogin(container, note){
+  container.innerHTML = `
+    <header class="page-head"><h2>Đăng nhập</h2><div class="tiny">${note||'Nhập thông tin để đăng nhập'}</div></header>
+    <div style="margin-top:12px;" class="card">
+      <label>Tên đăng nhập</label>
+      <input id="loginUser" type="text" />
+      <label style="margin-top:8px">Mật khẩu</label>
+      <input id="loginPwd" type="password" />
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn" onclick="doLogin()">Đăng nhập</button>
+        <button class="ghost" onclick="navigateTo('Đăng ký')">Đăng ký</button>
+      </div>
+    </div>
+  `;
+}
+
+function doLogin(){
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPwd').value;
+  if(!u||!p) return alert('Nhập đầy đủ');
+  const users = DB.users();
+  const user = users.find(x => x.username === u);
+  if(!user) return alert('Tài khoản không tồn tại');
+  if(user.pwdHash !== p) return alert('Mật khẩu sai');
+  const session = { userId: user.id, loggedAt: Date.now() };
+  DB.saveSession(session);
+  updateUserSummary();
+  navigateTo('Trang chủ');
+}
+
+function renderRegister(container){
+  container.innerHTML = `
+    <header class="page-head"><h2>Đăng ký</h2><div class="tiny">Tạo tài khoản mới</div></header>
+    <div style="margin:12px 0;" class="card">
+      <label>Tên hiển thị</label><input id="regDisplay" type="text" />
+      <label style="margin-top:8px">Tên đăng nhập</label><input id="regUser" type="text" />
+      <label style="margin-top:8px">Mật khẩu</label><input id="regPwd" type="password" />
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn" onclick="doRegister()">Tạo tài khoản</button>
+        <button class="ghost" onclick="navigateTo('Đăng nhập')">Đăng nhập</button>
+      </div>
+    </div>
+  `;
+}
+
+function doRegister(){
+  const display = document.getElementById('regDisplay').value.trim();
+  const username = document.getElementById('regUser').value.trim();
+  const pwd = document.getElementById('regPwd').value;
+  if(!display||!username||!pwd) return alert('Nhập đầy đủ thông tin');
+  const users = DB.users();
+  if(users.find(u=>u.username===username)) return alert('Tài khoản đã tồn tại');
+  const newUser = { id: genId(), username, pwdHash: pwd, display, isAdmin:false, createdAt: Date.now(), balance:0 };
+  users.push(newUser);
+  DB.saveUsers(users);
+  alert('Đăng ký thành công. Hãy đăng nhập.');
+  navigateTo('Đăng nhập');
+}
+
+function renderAdmin(container){
+  const sess = DB.session();
+  const users = DB.users();
+  const isAdmin = sess && users.find(u=>u.id===sess.userId && u.isAdmin);
+  if(!isAdmin) {
+    container.innerHTML = `<div class="card"><h3>Admin</h3><p class="tiny">Vũ Quốc Khánh xin chào quý khách.</p></div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <header class="page-head"><h2>Admin Dashboard</h2><div class="tiny">Quản lý key và đơn hàng</div></header>
+    <div style="margin-top:12px;">
+      <div class="card">
+        <h4>Thêm key mới</h4>
+        <label>Tên</label><input id="adm_name" type="text" />
+        <label style="margin-top:8px">Giá (VNĐ)</label><input id="adm_price" type="number" />
+        <label style="margin-top:8px">Số lượng (stock)</label><input id="adm_stock" type="number" />
+        <label style="margin-top:8px">Ghi chú</label><input id="adm_note" type="text" />
+        <label style="margin-top:8px">Mã key (mỗi dòng 1 mã)</label>
+        <textarea id="adm_codes" rows="4" placeholder="VD: ABC-123-XYZ&#10;DEF-456-GHI"></textarea>
+        <div style="margin-top:12px;">
+          <button class="btn" onclick="adminAddKey()">Thêm</button>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;" class="card">
+        <h4>Danh sách key</h4>
+        <div style="overflow:auto;">
+          <table class="table">
+            <thead><tr><th>Tên</th><th>Giá</th><th>Số lượng</th><th>Mã còn</th><th>Hành động</th></tr></thead>
+            <tbody id="adminKeyList"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;" class="card">
+        <h4>Đơn hàng & Nạp tiền</h4>
+        <div style="overflow:auto;">
+          <table class="table">
+            <thead><tr><th>Mã</th><th>Người</th><th>Loại</th><th>Tổng/SL</th><th>Trạng thái</th><th>Hành động</th></tr></thead>
+            <tbody id="adminOrdersList"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+  renderAdminKeys();
+  renderAdminOrders();
+}
+
+function adminAddKey(){
+  const name = document.getElementById('adm_name').value.trim();
+  const price = parseInt(document.getElementById('adm_price').value||0);
+  const stock = parseInt(document.getElementById('adm_stock').value||0);
+  const note = document.getElementById('adm_note').value.trim();
+  const codesRaw = document.getElementById('adm_codes').value || '';
+  if(!name||price<=0) return alert('Nhập tên và giá hợp lệ');
+  const codes = codesRaw.split(/\r?\n/).map(s=>s.trim()).filter(s=>s);
+  const keys = DB.keys();
+  keys.push({id:genId(), name, price, stock: Math.max(stock, codes.length > 0 ? codes.length : stock), note, codes: codes, createdAt: Date.now()});
+  DB.saveKeys(keys);
+  alert('Thêm key thành công');
+  renderAdmin(document.getElementById('pageContent'));
+}
+
+function renderAdminKeys(){
+  const keys = DB.keys();
+  const tbody = document.getElementById('adminKeyList');
+  tbody.innerHTML = keys.map(k=>`<tr>
+    <td>${k.name}</td>
+    <td class="price">${formatMoney(k.price)}</td>
+    <td>${k.stock}</td>
+    <td>${(k.codes? k.codes.length:0)}</td>
+    <td>
+      <button class="ghost" onclick="adminEditKey('${k.id}')">Sửa</button>
+      <button class="ghost" onclick="adminDeleteKey('${k.id}')">Xóa</button>
+      <button class="ghost" onclick="adminAddCodesPrompt('${k.id}')">Thêm mã</button>
+    </td>
+  </tr>`).join('');
+}
+
+function adminEditKey(id){
+  const k = DB.keys().find(x=>x.id===id);
+  if(!k) return alert('Không tìm thấy');
+  SwalModal(`
+    <h3 style="margin-top:0">Sửa key</h3>
+    <label>Tên</label><input id="e_name" value="${escapeHtml(k.name)}" />
+    <label style="margin-top:8px">Giá</label><input id="e_price" type="number" value="${k.price}" />
+    <label style="margin-top:8px">Số lượng</label><input id="e_stock" type="number" value="${k.stock}" />
+    <label style="margin-top:8px">Ghi chú</label><input id="e_note" value="${escapeHtml(k.note||'')}" />
+    <label style="margin-top:8px">Mã key hiện có (mỗi dòng)</label>
+    <textarea id="e_codes" rows="6">${(k.codes||[]).join('\n')}</textarea>
+    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn" onclick="adminSaveEdit('${k.id}')">Lưu</button>
+      <button class="ghost" onclick="Swal.close()">Hủy</button>
+    </div>
+  `);
+}
+
+function adminSaveEdit(id){
+  const keys = DB.keys();
+  const k = keys.find(x=>x.id===id);
+  if(!k) return alert('Không tìm thấy');
+  k.name = document.getElementById('e_name').value.trim();
+  k.price = parseInt(document.getElementById('e_price').value||0);
+  k.stock = parseInt(document.getElementById('e_stock').value||0);
+  k.note = document.getElementById('e_note').value.trim();
+  const codesRaw = document.getElementById('e_codes').value || '';
+  k.codes = codesRaw.split(/\r?\n/).map(s=>s.trim()).filter(s=>s);
+  DB.saveKeys(keys);
+  Swal.close();
+  renderAdmin(document.getElementById('pageContent'));
+}
+
+function adminDeleteKey(id){
+  if(!confirm('Xóa key này?')) return;
+  const keys = DB.keys().filter(x=>x.id!==id);
+  DB.saveKeys(keys);
+  renderAdmin(document.getElementById('pageContent'));
+}
+
+function adminAddCodesPrompt(id){
+  const k = DB.keys().find(x=>x.id===id);
+  if(!k) return alert('Không tìm thấy');
+  SwalModal(`
+    <h3 style="margin-top:0">Thêm mã cho: ${k.name}</h3>
+    <label>Mã key mới (mỗi dòng 1 mã)</label>
+    <textarea id="add_codes" rows="6" placeholder="CODE1&#10;CODE2"></textarea>
+    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn" onclick="adminAddCodes('${k.id}')">Thêm</button>
+      <button class="ghost" onclick="Swal.close()">Hủy</button>
+    </div>
+  `);
+}
+
+function adminAddCodes(id){
+  const raw = document.getElementById('add_codes').value || '';
+  const arr = raw.split(/\r?\n/).map(s=>s.trim()).filter(s=>s);
+  if(arr.length===0) return alert('Chưa nhập mã');
+  const keys = DB.keys();
+  const k = keys.find(x=>x.id===id);
+  if(!k) return alert('Không tìm thấy');
+  k.codes = (k.codes || []).concat(arr);
+  k.stock = Math.max(k.stock, (k.codes || []).length);
+  DB.saveKeys(keys);
+  Swal.close();
+  renderAdmin(document.getElementById('pageContent'));
+}
+
+function renderAdminOrders(){
+  const orders = DB.orders().slice().reverse();
+  const users = DB.users();
+  const tbody = document.getElementById('adminOrdersList');
+  tbody.innerHTML = orders.map(o=>`<tr>
+    <td class="kbd">${o.id}</td>
+    <td>${users.find(u=>u.id===o.userId)?.display||'Khách'}</td>
+    <td>${o.type === 'topup' ? 'Nạp tiền' : 'Mua'}</td>
+    <td>${o.type==='topup' ? formatMoney(o.amount) : (o.qty + ' x ' + formatMoney(o.total / (o.qty||1)))}</td>
+    <td>${o.status || '-'}</td>
+    <td>
+      ${o.type==='topup' ? (o.status==='Chờ duyệt' ? `<button class="btn" onclick="adminApproveTopup('${o.id}')">Duyệt</button>` : `<span class="tiny">Đã duyệt</span>`) : ''}
+      ${o.type!=='topup' ? `<button class="ghost" onclick="adminViewOrder('${o.id}')">Xem</button>` : ''}
+    </td>
+  </tr>`).join('');
+}
+
+function adminApproveTopup(orderId){
+  if(!confirm('Bạn có chắc muốn duyệt đơn nạp này và cộng tiền cho user?')) return;
+  const orders = DB.orders();
+  const o = orders.find(x=>x.id===orderId);
+  if(!o) return alert('Không tìm thấy đơn');
+  if(o.status !== 'Chờ duyệt') return alert('Đơn đã được xử lý');
+  const users = DB.users();
+  const u = users.find(x=>x.id===o.userId);
+  if(!u) return alert('Không tìm thấy user');
+  u.balance = (u.balance || 0) + (o.amount || 0);
+  DB.saveUsers(users);
+  o.status = 'Đã duyệt';
+  DB.saveOrders(orders);
+  renderAdmin(document.getElementById('pageContent'));
+  alert('Đã duyệt và cộng tiền cho user.');
+}
+
+function adminViewOrder(orderId){
+  const o = DB.orders().find(x=>x.id===orderId);
+  if(!o) return alert('Không tìm thấy');
+  const users = DB.users();
+  const u = users.find(x=>x.id===o.userId);
+  const codesHtml = o.codes ? o.codes.map((c,i)=> c? `<div><strong>Mã ${i+1}:</strong> <span class="kbd">${c}</span></div>` : `<div><strong>Mã ${i+1}:</strong> <em>Chưa có</em></div>`).join('') : '-';
+  SwalModal(`
+    <h3 style="margin-top:0">Đơn ${o.id}</h3>
+    <p class="tiny">Người: ${u?.display || 'Khách'}</p>
+    <p class="tiny">Loại: ${o.type || 'Mua'}</p>
+    <p class="tiny">Tổng: ${o.total ? formatMoney(o.total) : (o.amount ? formatMoney(o.amount) : '-') }</p>
+    <div style="margin-top:10px">${codesHtml}</div>
+    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+      ${o.type === 'topup' && o.status === 'Chờ duyệt' ? `<button class="btn" onclick="adminApproveTopup('${o.id}'); Swal.close()">Duyệt nạp</button>` : ''}
+      <button class="ghost" onclick="Swal.close()">Đóng</button>
+    </div>
+  `);
+}
+
+function formatMoney(v){ return (v||0).toLocaleString('vi-VN') + '₫'; }
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function SwalModal(html){
+  if(document.getElementById('swalModal')) document.getElementById('swalModal').remove();
+  const div = document.createElement('div');
+  div.id='swalModal';
+  Object.assign(div.style, {
+    position:'fixed',
+    left:0,
+    right:0,
+    top:0,
+    bottom:0,
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    zIndex:220,
+    padding:'18px'
+  });
+  div.innerHTML = `
+    <div style="position:absolute; left:0; top:0; right:0; bottom:0; background:rgba(5,2,12,0.65); backdrop-filter:blur(6px);" onclick="document.getElementById('swalModal')?.remove()"></div>
+    <div style="position:relative; z-index:221; width:92%; max-width:640px;">
+      <div style="background:linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04)); border:1px solid rgba(255,255,255,0.10); padding:22px; border-radius:24px; color:#f5f3ff; box-shadow:0 30px 60px rgba(0,0,0,0.35); backdrop-filter:blur(20px);">
+        ${html}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(div);
+}
+
+function SwalClose(){ document.getElementById('swalModal')?.remove(); }
+
+updateUserSummary();
+navigateTo('Trang chủ');
+
+window.navigateTo = navigateTo;
+window.startPurchase = startPurchase;
+window.viewKey = viewKey;
+window.doTopUp = doTopUp;
+window.doLogin = doLogin;
+window.doRegister = doRegister;
+window.adminAddKey = adminAddKey;
+window.adminEditKey = adminEditKey;
+window.adminDeleteKey = adminDeleteKey;
+window.adminAddCodesPrompt = adminAddCodesPrompt;
+window.adminAddCodes = adminAddCodes;
+window.adminApproveTopup = adminApproveTopup;
+window.adminViewOrder = adminViewOrder;
+window.confirmPurchase = confirmPurchase;
+window.adminSaveEdit = adminSaveEdit;
+window.sendContact = sendContact;
+window.Swal = {open:SwalModal, close:SwalClose};
+</script>
+
+</body>
+</html>
