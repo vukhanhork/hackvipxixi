@@ -627,7 +627,7 @@
     </div>
     <div>
       <h3 style="margin:0;font-size:16px">SHOP KEY VU QUOC KHANH</h3>
-      <div class="tiny">Giao diện mới tông tím hiện đại</div>
+      <div class="tiny"></div>
     </div>
   </div>
   <div style="margin-top:14px;">
@@ -711,12 +711,41 @@ function genId(){ return 'id_' + Math.random().toString(36).slice(2,9); }
 
 DB.init();
 
-const PAGES = ['Trang chủ','Mua hàng','Nạp tiền','Đơn hàng','Video cài đặt','Liên hệ','Đăng nhập','Đăng ký','Admin'];
+const BASE_PAGES = ['Trang chủ','Mua hàng','Nạp tiền','Đơn hàng','Video cài đặt','Liên hệ'];
+const GUEST_PAGES = ['Đăng nhập','Đăng ký'];
+
+function getCurrentUser(){
+  const sess = DB.session();
+  if(!sess) return null;
+  return DB.users().find(u => u.id === sess.userId) || null;
+}
+
+function isCurrentAdmin(){
+  const user = getCurrentUser();
+  return !!(user && user.isAdmin);
+}
+
+function getPages(){
+  const user = getCurrentUser();
+  let pages = [...BASE_PAGES];
+
+  if(!user){
+    pages.push(...GUEST_PAGES);
+  }
+
+  if(user && user.isAdmin){
+    pages.push('Admin');
+  }
+
+  return pages;
+}
 
 function createNavButtons(){
+  const pages = getPages();
+
   const nav = document.getElementById('navList');
   nav.innerHTML='';
-  PAGES.forEach(p=>{
+  pages.forEach(p=>{
     const btn = document.createElement('button');
     btn.textContent = p;
     btn.onclick = ()=>navigateTo(p);
@@ -727,7 +756,7 @@ function createNavButtons(){
   const mnav = document.getElementById('mobileNavList');
   if(mnav){
     mnav.innerHTML='';
-    PAGES.forEach(p=>{
+    pages.forEach(p=>{
       const b = document.createElement('button');
       b.textContent = p;
       b.className='ghost';
@@ -738,7 +767,6 @@ function createNavButtons(){
     });
   }
 }
-createNavButtons();
 
 document.getElementById('btnLoginShort').onclick = ()=>navigateTo('Đăng nhập');
 document.getElementById('openNav').onclick = ()=>toggleMobileNav();
@@ -752,18 +780,22 @@ function toggleMobileNav(){
 function updateUserSummary(){
   const sess = DB.session();
   const el = document.getElementById('userSummary');
+
   if(!sess){
     el.innerHTML = '<div class="pill">Chưa đăng nhập</div>';
     document.getElementById('btnLoginShort').textContent='Đăng nhập';
     document.getElementById('btnLoginShort').onclick = ()=>navigateTo('Đăng nhập');
+    createNavButtons();
     return;
   }
+
   const u = DB.users().find(x=>x.id===sess.userId);
   if(!u) {
     DB.saveSession(null);
     updateUserSummary();
     return;
   }
+
   el.innerHTML = '<div><strong>'+u.display+'</strong><div class="tiny" style="margin-top:6px;">Số dư: <span class="kbd">'+(u.balance||0)+'₫</span></div></div>';
   document.getElementById('btnLoginShort').textContent='Đăng xuất';
   document.getElementById('btnLoginShort').onclick = ()=>{
@@ -771,18 +803,27 @@ function updateUserSummary(){
     updateUserSummary();
     navigateTo('Trang chủ');
   };
+
+  createNavButtons();
 }
 
 function setActiveNav(page){
-  PAGES.forEach(p=>{
+  getPages().forEach(p=>{
     const btn = document.getElementById('nav-'+p.replace(/\s+/g,'_'));
     if(btn) btn.classList.toggle('active', p===page);
   });
 }
 
 function navigateTo(page){
+  const pages = getPages();
+
+  if(!pages.includes(page)){
+    page = 'Trang chủ';
+  }
+
   setActiveNav(page);
   const content = document.getElementById('pageContent');
+
   if(page==='Trang chủ') return renderHome(content);
   if(page==='Mua hàng') return renderShop(content);
   if(page==='Nạp tiền') return renderTopUp(content);
@@ -792,6 +833,7 @@ function navigateTo(page){
   if(page==='Đăng nhập') return renderLogin(content);
   if(page==='Đăng ký') return renderRegister(content);
   if(page==='Admin') return renderAdmin(content);
+
   return renderHome(content);
 }
 
@@ -816,8 +858,8 @@ function renderHome(container){
 
     <div class="hero-banner">
       <div>
-        <div class="pill">Phiên bản giao diện mới</div>
-        <h2 style="margin:14px 0 10px; font-size:30px; line-height:1.2;">Shop key nổi bật hơn với tông tím premium</h2>
+        <div class="pill">VIP</div>
+        <h2 style="margin:14px 0 10px; font-size:30px; line-height:1.2;">Shop key </h2>
         <div class="small" style="max-width:640px; line-height:1.8;"></div>
         <div class="hero-actions">
           <button class="btn" onclick="navigateTo('Mua hàng')">Xem sản phẩm</button>
@@ -1194,11 +1236,8 @@ function doRegister(){
 }
 
 function renderAdmin(container){
-  const sess = DB.session();
-  const users = DB.users();
-  const isAdmin = sess && users.find(u=>u.id===sess.userId && u.isAdmin);
-  if(!isAdmin) {
-    container.innerHTML = `<div class="card"><h3>Admin</h3><p class="tiny">Vũ Quốc Khánh xin chào quý khách.</p></div>`;
+  if(!isCurrentAdmin()) {
+    navigateTo('Trang chủ');
     return;
   }
 
@@ -1244,6 +1283,8 @@ function renderAdmin(container){
 }
 
 function adminAddKey(){
+  if(!isCurrentAdmin()) return alert('Bạn không có quyền thực hiện thao tác này.');
+
   const name = document.getElementById('adm_name').value.trim();
   const price = parseInt(document.getElementById('adm_price').value||0);
   const stock = parseInt(document.getElementById('adm_stock').value||0);
@@ -1259,6 +1300,8 @@ function adminAddKey(){
 }
 
 function renderAdminKeys(){
+  if(!isCurrentAdmin()) return;
+
   const keys = DB.keys();
   const tbody = document.getElementById('adminKeyList');
   tbody.innerHTML = keys.map(k=>`<tr>
@@ -1275,6 +1318,8 @@ function renderAdminKeys(){
 }
 
 function adminEditKey(id){
+  if(!isCurrentAdmin()) return alert('Bạn không có quyền thực hiện thao tác này.');
+
   const k = DB.keys().find(x=>x.id===id);
   if(!k) return alert('Không tìm thấy');
   SwalModal(`
@@ -1293,6 +1338,8 @@ function adminEditKey(id){
 }
 
 function adminSaveEdit(id){
+  if(!isCurrentAdmin()) return alert('Bạn không có quyền thực hiện thao tác này.');
+
   const keys = DB.keys();
   const k = keys.find(x=>x.id===id);
   if(!k) return alert('Không tìm thấy');
@@ -1308,6 +1355,8 @@ function adminSaveEdit(id){
 }
 
 function adminDeleteKey(id){
+  if(!isCurrentAdmin()) return alert('Bạn không có quyền thực hiện thao tác này.');
+
   if(!confirm('Xóa key này?')) return;
   const keys = DB.keys().filter(x=>x.id!==id);
   DB.saveKeys(keys);
@@ -1315,6 +1364,8 @@ function adminDeleteKey(id){
 }
 
 function adminAddCodesPrompt(id){
+  if(!isCurrentAdmin()) return alert('Bạn không có quyền thực hiện thao tác này.');
+
   const k = DB.keys().find(x=>x.id===id);
   if(!k) return alert('Không tìm thấy');
   SwalModal(`
@@ -1329,6 +1380,8 @@ function adminAddCodesPrompt(id){
 }
 
 function adminAddCodes(id){
+  if(!isCurrentAdmin()) return alert('Bạn không có quyền thực hiện thao tác này.');
+
   const raw = document.getElementById('add_codes').value || '';
   const arr = raw.split(/\r?\n/).map(s=>s.trim()).filter(s=>s);
   if(arr.length===0) return alert('Chưa nhập mã');
@@ -1343,6 +1396,8 @@ function adminAddCodes(id){
 }
 
 function renderAdminOrders(){
+  if(!isCurrentAdmin()) return;
+
   const orders = DB.orders().slice().reverse();
   const users = DB.users();
   const tbody = document.getElementById('adminOrdersList');
@@ -1360,6 +1415,8 @@ function renderAdminOrders(){
 }
 
 function adminApproveTopup(orderId){
+  if(!isCurrentAdmin()) return alert('Bạn không có quyền thực hiện thao tác này.');
+
   if(!confirm('Bạn có chắc muốn duyệt đơn nạp này và cộng tiền cho user?')) return;
   const orders = DB.orders();
   const o = orders.find(x=>x.id===orderId);
@@ -1377,6 +1434,8 @@ function adminApproveTopup(orderId){
 }
 
 function adminViewOrder(orderId){
+  if(!isCurrentAdmin()) return alert('Bạn không có quyền thực hiện thao tác này.');
+
   const o = DB.orders().find(x=>x.id===orderId);
   if(!o) return alert('Không tìm thấy');
   const users = DB.users();
@@ -1428,6 +1487,7 @@ function SwalModal(html){
 function SwalClose(){ document.getElementById('swalModal')?.remove(); }
 
 updateUserSummary();
+createNavButtons();
 navigateTo('Trang chủ');
 
 window.navigateTo = navigateTo;
